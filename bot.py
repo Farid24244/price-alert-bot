@@ -1,11 +1,11 @@
-import os
+نimport os
 import requests
 
 token = os.environ["BOT_TOKEN"]
 chat_id = os.environ["CHAT_ID"]
 
 HIGH = 69500
-LOW = 68000
+LOW = 66500
 
 r = requests.get("https://api.coinbase.com/v2/prices/BTC-USD/spot", timeout=20)
 price = float(r.json()["data"]["amount"])
