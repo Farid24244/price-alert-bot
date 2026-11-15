@@ -1,16 +1,21 @@
 import json
 import os
+import re
 
 import requests
 
-TOKEN = os.environ["BOT_TOKEN"].strip()
-CHAT_ID = os.environ["CHAT_ID"].strip()
-import re
-
-if not re.fullmatch(r"\d{5,12}:[A-Za-z0-9_-]{30,}", TOKEN):
-    print("BOT_TOKEN has the wrong shape. length:", len(TOKEN), "colons:", TOKEN.count(":"))
+# The token is pulled out of whatever was pasted into the Secret,
+# so extra text or blank lines around it do no harm.
+RAW_TOKEN = os.environ["BOT_TOKEN"]
+match = re.search(r"\d{5,12}:[A-Za-z0-9_-]{30,}", RAW_TOKEN)
+if not match:
+    print("BOT_TOKEN has the wrong shape. length:", len(RAW_TOKEN), "colons:", RAW_TOKEN.count(":"))
     raise SystemExit(1)
+TOKEN = match.group(0)
+CHAT_ID = os.environ["CHAT_ID"].strip()
 
+# These three come from the repository Variables (Settings > Secrets and variables > Actions > Variables).
+# If a Variable is empty or missing, the default after "or" is used.
 PAIR = (os.environ.get("PAIR") or "BTC-USD").strip().upper()
 HIGH = float(os.environ.get("HIGH") or 69500)
 LOW = float(os.environ.get("LOW") or 66500)
