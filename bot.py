@@ -3,8 +3,8 @@ import os
 
 import requests
 
-TOKEN = os.environ["BOT_TOKEN"]
-CHAT_ID = os.environ["CHAT_ID"]
+TOKEN = os.environ["BOT_TOKEN"].strip()
+CHAT_ID = os.environ["CHAT_ID"].strip()
 
 PAIR = (os.environ.get("PAIR") or "BTC-USD").strip().upper()
 HIGH = float(os.environ.get("HIGH") or 69500)
