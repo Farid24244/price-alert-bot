@@ -5,6 +5,11 @@ import requests
 
 TOKEN = os.environ["BOT_TOKEN"].strip()
 CHAT_ID = os.environ["CHAT_ID"].strip()
+import re
+
+if not re.fullmatch(r"\d{5,12}:[A-Za-z0-9_-]{30,}", TOKEN):
+    print("BOT_TOKEN has the wrong shape. length:", len(TOKEN), "colons:", TOKEN.count(":"))
+    raise SystemExit(1)
 
 PAIR = (os.environ.get("PAIR") or "BTC-USD").strip().upper()
 HIGH = float(os.environ.get("HIGH") or 69500)
